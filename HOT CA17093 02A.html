@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+    <head>  
+        <meta name="author" content="WONG HUNG CHAN CA17093 02A">
+        <meta charset="UTF-8">
+        <link href="hotCa17093.css" rel="stylesheet" type="text/css">
+
+
+        <!--This Section is Internal Javascript-->
+        <script>
+        
+            function order(ship){
+                var powerbankQty = parseInt(document.getElementById("powerbankQty").value);
+                var watchQty = parseInt(document.getElementById("watchQty").value);
+                var mouseQty = parseInt(document.getElementById("mouseQty").value);
+                var laserQty = parseInt(document.getElementById("laserQty").value);
+                var diskQty = parseInt(document.getElementById("diskQty").value);
+
+                var itemQty = powerbankQty + watchQty + mouseQty + laserQty + diskQty;
+
+                var powerbankUnit = parseFloat(document.getElementById("powerbankPrice").value);
+                var watchUnit = parseFloat(document.getElementById("watchPrice").value);
+                var mouseUnit = parseFloat(document.getElementById("mousePrice").value);
+                var laserUnit = parseFloat(document.getElementById("laserPrice").value);
+                var diskUnit = parseFloat(document.getElementById("diskPrice").value);
+
+                var powerbankDisc = discount(powerbankUnit);  
+                var watchDisc = discount(watchUnit);
+                var mouseDisc = discount(mouseUnit);
+                var laserDisc = discount(laserUnit);
+                var diskDisc = discount(diskUnit);
+            
+                var powerbankSubtotal = powerbankQty * powerbankUnit.toFixed(2) - ((powerbankQty * powerbankUnit.toFixed(2)) * (powerbankDisc / 100)); 
+                var mouseSubtotal = mouseQty * mouseUnit.toFixed(2) - ((mouseQty * mouseUnit.toFixed(2)) * (mouseDisc / 100));
+                var watchSubtotal = watchQty * watchUnit.toFixed(2) - ((watchQty * watchUnit.toFixed(2)) * (watchDisc / 100));
+                var laserSubtotal = laserQty * laserUnit.toFixed(2) - ((laserQty * laserUnit.toFixed(2)) * (laserDisc / 100));
+                var diskSubtotal = diskQty * diskUnit.toFixed(2) - ((diskQty * diskUnit.toFixed(2)) * (diskDisc / 100));
+                var totalBeforeShip = powerbankSubtotal + mouseSubtotal + watchSubtotal + laserSubtotal + diskSubtotal;
+
+
+
+                document.getElementById("powerbankDisc").value = powerbankDisc;
+                document.getElementById("watchDisc").value = watchDisc;
+                document.getElementById("mouseDisc").value = mouseDisc;
+                document.getElementById("laserDisc").value = laserDisc;
+                document.getElementById("diskDisc").value = diskDisc;
+
+                document.getElementById("powerbankSub").value = powerbankSubtotal.toFixed(2);
+                document.getElementById("watchSub").value = watchSubtotal.toFixed(2);
+                document.getElementById("mouseSub").value = mouseSubtotal.toFixed(2);
+                document.getElementById("laserSub").value = laserSubtotal.toFixed(2);
+                document.getElementById("diskSub").value = diskSubtotal.toFixed(2);
+                
+                document.getElementById("totalQty").value = itemQty;
+                document.getElementById("beforeShippingPrice").value = totalBeforeShip.toFixed(2);
+
+                var shippingValue = shipment(ship,totalBeforeShip);
+                var totalAfter = (totalBeforeShip + shippingValue).toFixed(2)
+                document.getElementById("shippingPrice").value = shippingValue.toFixed(2);
+                document.getElementById("afterShippingPrice").value = totalAfter;
+                
+            
+            
+            }
+            function shipment(ship, price){
+                if(ship == "Poslaju"){
+                    if(price > 100){
+                        return 20.80;
+                    }
+                    else if(price > 50){
+                        return 12.80;
+                    }
+                    else if(price > 20){
+                        return 11.80;
+                    }
+                    else{
+                        return 7.20;
+                    }
+                }
+                else{
+                    if(price > 100){
+                        return 24.50;
+                    }
+                    else if(price > 50){
+                        return 15.50;
+                    }
+                    else if(price > 20){
+                        return 13.00;
+                    }
+                    else{
+                        return 11.50;
+                    }
+
+                }
+            }
+
+            function discount(unitPrice){
+               
+                if(unitPrice > 100){
+                    return 50; 
+                }
+                else if(unitPrice >=75){
+                    return 25;
+                }
+                else if(unitPrice >= 50){
+                    return 10;
+                }
+                else if(unitPrice >= 25){
+                    return 5;
+
+                }
+                else{
+                    return 0;
+                }
+                
+            }
+
+            
+        </script>
+
+    </head>
+
+        
+    <body>
+
+        <header>
+            <img src="shoppee.png" alt="shoppee picture">
+        </header>
+
+
+        <div class="container">
+
+            <form onsubmit="return false">
+                
+                <table>
+                    <tr>
+                        <th>PRODUCT</th>
+                        <th>UNIT PRICE(RM)</th>
+                        <th>QUANTITY</th>
+                        <th>DISC.(%)</th>
+                        <th>SUBTOTAL(RM)</th>
+                    </tr>
+                    <tr>
+                        <td>Original Pineng Powerbank</td>
+                        <td><input type="text" value="23.00" id="powerbankPrice" disabled></td>
+                        <td><input type="text" id="powerbankQty" required></td>
+                        <td><input type="text" id="powerbankDisc" disabled></td>
+                        <td><input type="text" id="powerbankSub" disabled></td>
+                                           
+                    </tr>
+                    <tr>
+                        <td>Smart Watch Bluetooth</td>
+                        <td><input type="text" value="223.50" id="watchPrice" disabled></td>
+                        <td><input type="text" id="watchQty" required></td>
+                        <td><input type="text" id="watchDisc" disabled></td>
+                        <td><input type="text" id="watchSub" disabled></td>
+                                           
+                    </tr>
+                    <tr>
+                        <td>Logitech Wireless Mouse</td>
+                        <td><input type="text" value="25.50" id="mousePrice" disabled></td>
+                        <td><input type="text" id="mouseQty" required></td>
+                        <td><input type="text" id="mouseDisc" disabled></td>
+                        <td><input type="text" id="mouseSub" disabled></td>
+                                           
+                    </tr>
+                    <tr>
+                        <td>Wireless Green Laser Pointer</td>
+                        <td><input type="text" value="62.99" id="laserPrice" disabled></td>
+                        <td><input type="text" id="laserQty" required></td>
+                        <td><input type="text" id="laserDisc" disabled></td>
+                        <td><input type="text" id="laserSub" disabled></td>
+                                           
+                    </tr>
+                    <tr>
+                        <td>1TB External Hard Disk USB 3.0</td>
+                        <td><input type="text" value="84.90" id="diskPrice" disabled></td>
+                        <td><input type="text" id="diskQty" required></td>
+                        <td><input type="text" id="diskDisc" disabled></td>
+                        <td><input type="text" id="diskSub" disabled></td>
+                                           
+                    </tr>
+                    <tr>
+                        <td><strong>Shipping Option</strong></td>
+                        <td><input type="radio" name="shipping" id="shipping" value="Poslaju" required oninvalid="window.alert('Please select shipping option')">Poslaju</td>
+                        <td><input type="radio" name="shipping" id="shipping" value="GDEx" required  >GDEx</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ITEM QUANTITY:</strong></td>
+                        <td><input type="text" id="totalQty" disabled></td>
+                    </tr>
+                    <tr>
+                        <td><strong>PRICE (RM):</strong></td>
+                        <td><input type="text" id="beforeShippingPrice" disabled></td>
+
+                    </tr>
+                    <tr>
+                        <td><strong>SHIPPING PRICE(RM):</strong></td>
+                        <td><input type="text" id="shippingPrice" disabled></td>
+
+                    </tr>
+                    <tr>
+                        <td><strong>TOTAL PRICE(RM):</strong></td>
+                        <td><input type="text" id="afterShippingPrice" disabled></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><button type="submit" onclick="order(shipping.value)">Submit Order</button> <button type="reset">Reset</button></td>
+                    </tr>
+                </table>
+            
+            
+            </form>
+
+        </div>
+
+
+        <footer><img src="footer.png" alt="footer"></footer>
+    </body>
+</html>
